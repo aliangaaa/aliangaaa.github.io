@@ -1,6 +1,6 @@
 ---
 layout: post
-title: atomic
+title: shared_ptr
 category: CPP
 tags: Essay
 keywords: 
