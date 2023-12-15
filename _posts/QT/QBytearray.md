@@ -1,3 +1,9 @@
+---
+layout: post
+title: QBytearray
+category: QT
+keywords: QBytearray
+---
 1、QBytearray从16进制字符串转化
 
 ```cpp
