@@ -1,0 +1,26 @@
+<https://github.com/firstcontributions/first-contributions/blob/main/translations/README.zh-cn.md>
+
+```cpp
+git clone <url>
+git checkout b <新的分支>    //与远端无绑定
+*	git checkout -b <新的分支> <origin/<远端分支>>	// 与远端绑定
+git checkout <分支>  		// 切换分支
+git add <改变的文件>
+git commit -m <改变的文件>
+git commit <改变的文件>	// 增加备注， <esc>， :wq
+*	git push origin <HEAD:远端分支>  // 如果没有远端分支，则直接在远端建立同名分支
+
+git pull 拉取代码
+
+// 设置网络代理
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+
+// 查看本地和远端的绑定关系
+git branch -vv
+
+// 删除分支
+git push origin --delete 分支名     // 远端
+git branch -d 分支名					// 本地
+```
+
