@@ -1,7 +1,7 @@
 ---
 layout: post
 title: std::function
-category: C++
+category: CPP
 tags: Essay
 keywords: 
 description: 
