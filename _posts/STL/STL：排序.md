@@ -1,0 +1,11 @@
+```cpp
+// 正向排序 end 最后一位的后一位
+sort(nums.begin(), nums.end());
+// 反向排序 rend 最前面一位的前一位
+sort(nums.rbegin(), nums.rend());
+//map、set
+map<int, int> mymap;
+//反向
+map<int, int, greater<int>> mymap;
+```
+

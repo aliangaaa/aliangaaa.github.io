@@ -1,0 +1,91 @@
+atomic变量保证原子性
+
+多线程处理(读写改)同一个变量时，使用atomic可以保证以下操作是原子的
+
+```cpp
+std::atomic<unsigned long long>原子变量的常用操作有：
+
+（1） -- ++操作
+
+（2）store（写操作）
+
+（3）load（读操作）
+
+（4）exchange（交换数据）
+
+（5）compare_exchange_weak （CAS）
+
+（6）compare_exchange_strong （加强版的CAS，性能略差）
+————————————————
+版权声明：本文为CSDN博主「hsy12342611」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/hsy12342611/article/details/127764650
+```
+
+但是例如 atomic\<int> x(0)            x = x + 1 这样的表达式不是原子的 需要加锁
+
+```cpp
+自定义类型原子变量std::atomic<Node*>的常用操作有：
+
+（1）store（写操作）
+
+（2）load（读操作）
+
+（3）exchange（交换数据）
+
+（4）compare_exchange_weak （CAS）
+
+（5）compare_exchange_strong
+————————————————
+版权声明：本文为CSDN博主「hsy12342611」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/hsy12342611/article/details/127764650
+```
+
+```cpp
+memory order	作用
+memory_order_relaxed	最弱的内存顺序，无fencing作用，没有任何顺序要求，cpu和编译器可以重排指令。原子操作可以以任意顺序执行，并且不保证与其他操作的顺序关系。这种顺序提供了最高的并发性，但可能导致读取操作看到过期的值或写入操作覆盖其他线程的写入结果。
+memory_order_consume	消费顺序要求在当前线程中，所有后续依赖于该原子操作的读操作都必须在原子操作完成后执行。这种顺序确保了读操作之间的依赖关系，并且对于写操作或其他线程中的读操作没有顺序要求。
+memory_order_acquire	获取顺序要求在当前线程中，所有后续的读操作都必须在原子操作完成后执行。这种顺序确保了当前线程对原子操作的读取操作不会被重新排序到原子操作之前，但对于写操作或其他线程中的读操作没有顺序要求。
+memory_order_release	在这条指令执行前的对内存的读写指令都执行完毕，这条语句之后的对内存的修改指令不能超越这条指令优先执行。这像一道栅栏。
+memory_order_acq_rel	是memory_order_acquire和memory_order_release的合并，这条语句前后的语句都不能被reorder。
+memory_order_seq_cst	比memory_order_acq_rel更加严格的顺序保证，memory_order_seq_cst执行完毕后，所有其它cpu都是确保可以看到之前修改的最新数据的。如果前面的几个memory order模式允许有缓冲存在的话，memory_order_seq_cst指令执行后则保证真正写入内存。一个普通的读就可以看到由memory_order_seq_cst修改的数据，而memory_order_acquire则需要由memory_order_release配合才能看到，否则什么时候一个普通的load能看到memory_order_release修改的数据是不保证的
+————————————————
+版权声明：本文为CSDN博主「_李白_」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_40179091/article/details/109319467
+```
+
+memory\_order\_relaxed保证store和load的原子性
+
+```cpp
+#include <iostream>
+#include <atomic>
+#include <thread>
+
+
+std::atomic<int> sharedValue(0);
+
+// 线程1
+void Thread1()
+{
+    sharedValue.store(5, std::memory_order_relaxed);
+}
+
+// 线程2
+void Thread2()
+{
+    int value = sharedValue.load(std::memory_order_relaxed);
+    // 可能输出0或5，由于松散顺序，读取操作的顺序不确定
+    std::cout << "Value: " << value << std::endl;
+}
+
+int main()
+{
+    std::thread t1(Thread1);
+    std::thread t2(Thread2);
+
+    t1.join();
+    t2.join();
+
+    return 0;
+}
+```
+

@@ -1,0 +1,13 @@
+while
+
+```python
+while condition < 1 and condition > 0:
+```
+
+for
+
+```python
+for i in range(0, len(nums)):
+```
+
+python中无++ 、--
