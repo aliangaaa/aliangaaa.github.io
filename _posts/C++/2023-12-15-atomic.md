@@ -1,7 +1,7 @@
 ---
 layout: post
 title: atomic
-category: C++
+category: CPP
 tags: Essay
 keywords: 
 description: 
