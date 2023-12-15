@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 编译verilator
-category: C++
+category: CPP
 tags: Essay
 keywords: 
 description: 
