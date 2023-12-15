@@ -1,0 +1,29 @@
+线程函数结束，线程并未结束， 线程需要quit或者terminate才会结束，并且发送finished信号；或者删除线程内存，在点击启动的时候new一个新的线程
+
+qt开启一个多线程
+
+thread的start方法
+
+```cpp
+QThread thread;
+QObject:
+Newthread myobject = new Newthread;
+myobject->movetothread(&thread);
+thread.start();
+connect(&thread, &QThread::started, myobject, &Newthread::run);
+只有run在子线程中
+```
+
+信号槽的方法
+
+```cpp
+QThread thread;
+QObject:
+Newthread myobject = new Newthread;
+myobject->movetothread(&thread);
+connect(this, &Mainwindow::signal1, myobject, &Newthread::slot1);
+connect(this, &Mainwindow::signal1, myobject, &Newthread::slot1);
+thread.start();
+凡是用信号和槽绑定的slot都运行在子线程中
+```
+
