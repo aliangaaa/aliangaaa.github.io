@@ -37,13 +37,15 @@ favicon: https://avatars2.githubusercontent.com/u/131230?v=3&s=460
 
 live2d:
   enable: true
+  # 推荐使用 jsdelivr 的 CDN 来加载
   scriptFrom: local
   pluginRootPath: live2dw/
   pluginJsPath: lib/
   pluginModelPath: assets/
   tagMode: false
-  log: false
+  debug: false
   model:
+    # 推荐使用 CDN 来加载模型
     use: live2d-widget-model-koharu
   display:
     position: right
@@ -53,6 +55,11 @@ live2d:
     show: true
   react:
     opacity: 0.7
+  dialog:
+  #   # 是否开启对话框
+     enable: true
+  #   # 是否使用一言
+     hitokoto: true
     
 # Build settings
 permalink: /:year/:month/:day/:title.html
