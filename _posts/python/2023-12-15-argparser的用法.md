@@ -1,3 +1,12 @@
+---
+layout: post
+title: argparser的用法
+category: python
+tags: Essay
+keywords: 
+description: 
+---
+
 ```python
 import os
 import argparse

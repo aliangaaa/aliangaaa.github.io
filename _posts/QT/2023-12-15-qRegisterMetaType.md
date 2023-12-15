@@ -1,3 +1,12 @@
+---
+layout: post
+title: qRegisterMetaType
+category: QT
+tags: Essay
+keywords: 
+description: 
+---
+
 ```cpp
 如果非QMetaType内置类型要在 Qt 的属性系统中使用
 

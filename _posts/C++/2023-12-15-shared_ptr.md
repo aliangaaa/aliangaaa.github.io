@@ -1,3 +1,12 @@
+---
+layout: post
+title: atomic
+category: C++
+tags: Essay
+keywords: 
+description: 
+---
+
 ```cpp
 在对象使用周期内始终有效
 shared_ptr<class name> = shared_ptr<class name>(new class name);

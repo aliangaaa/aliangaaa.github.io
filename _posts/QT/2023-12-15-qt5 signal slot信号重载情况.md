@@ -1,3 +1,12 @@
+---
+layout: post
+title: signal slot信号重载情况
+category: QT
+tags: Essay
+keywords: 
+description: 
+---
+
 ```cpp
 connect(dynamiccast<A*>(a), static_cast<void (A::*)(QString)>(&A::b),[]{}() );
 

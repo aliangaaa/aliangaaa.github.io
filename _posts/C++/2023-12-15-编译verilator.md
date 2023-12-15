@@ -1,3 +1,12 @@
+---
+layout: post
+title: 编译verilator
+category: C++
+tags: Essay
+keywords: 
+description: 
+---
+
 1.编译64位exe，使用cygwin64
 
 cd vecilator-5.006/

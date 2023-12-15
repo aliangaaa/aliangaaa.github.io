@@ -1,3 +1,12 @@
+---
+layout: post
+title: std::function
+category: C++
+tags: Essay
+keywords: 
+description: 
+---
+
 `std::function` 是 C++11 中的一个函数对象封装类，它可以用来保存任意可调用对象（函数指针、函数对象、成员函数指针等），并且可以在需要的时候调用这些可调用对象。下面是一个简单的示例来演示如何使用 `std::function`：
 
 ```cpp
