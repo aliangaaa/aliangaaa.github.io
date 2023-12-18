@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+/*
+抽象工厂模式，一个工厂生产多个产品
+*/
+//抽象球
+class Abstractball{
+public:
+	virtual void play() = 0;
+	virtual ~Abstractball(){};
+};
+
+class basketball :public Abstractball{
+private:
+	virtual void play(){
+		cout << "play basketball" << endl;
+	};
+};
+
+class football :public Abstractball{
+private:
+	virtual void play(){
+		cout << "play football" << endl;
+	};
+};
+//抽象衣服
+class Abstractshirt{
+public:
+	virtual void wearshirt() = 0;
+	virtual ~Abstractshirt(){};
+};
+
+class basketshirt :public Abstractshirt{
+private:
+	virtual void wearshirt(){
+		cout << "wear basket shirt" << endl;
+	};
+};
+
+class footshirt :public Abstractshirt{
+private:
+	virtual void wearshirt(){
+		cout << "wear foot shirt" << endl;
+	};
+};
+//抽象工厂
+class AbstractFactory{
+public:
+	virtual Abstractball* getball() = 0;
+	virtual Abstractshirt* getshirt() = 0;
+	virtual ~AbstractFactory(){};
+};
+
+class basketFactory :public AbstractFactory{
+private:
+	virtual Abstractball* getball(){
+		return new basketball();
+	};
+	virtual Abstractshirt* getshirt(){
+		return new basketshirt();
+	};
+};
+
+class footFactory :public AbstractFactory{
+private:
+	virtual Abstractball* getball(){
+		return new football();
+	};
+	virtual Abstractshirt* getshirt(){
+		return new footshirt();
+	};
+};

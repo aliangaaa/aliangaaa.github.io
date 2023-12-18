@@ -1,0 +1,69 @@
+/*
+把工厂抽象出来，一个工厂负责一个产品
+父类虚函数权限是public，子类重写可以是private
+相较于简单工厂模式，工厂方法模式符合“开闭原则”
+助记：虚拟工厂生产虚拟产品，虚拟产品申明虚拟行为
+*/
+#include <iostream>
+using namespace std;
+//抽象产品
+class AbstractProduct{
+public:
+	virtual void dpname() = 0;
+	virtual void play() = 0;
+};
+
+class basketball :public AbstractProduct{
+public:
+	basketball(){};
+	~basketball(){};
+private:
+	void dpname(){
+		cout << "im basketball" << endl;
+	}
+	void play(){
+		cout << "play basketball" << endl;
+	}
+};
+
+class football :public AbstractProduct{
+public:
+	football(){};
+	~football(){};
+private:
+	void dpname(){
+		cout << "im football" << endl;
+	}
+	void play(){
+		cout << "play football" << endl;
+	}
+};
+
+//抽象工厂
+class AbstractFactory{
+public:
+	AbstractFactory(){};
+	virtual ~AbstractFactory(){};
+	virtual AbstractProduct* getinstance() = 0;
+};
+
+class BasketballFactory:public AbstractFactory{
+private:
+	AbstractProduct* getinstance(){
+		return new basketball();
+	}
+};
+
+class FootballFactory :public AbstractFactory{
+private:
+	AbstractProduct* getinstance(){
+		return new football();
+	}
+};
+
+void main(){
+	AbstractFactory* a = new basketFactory();
+	Abstractball* b = a->getinstance();
+	b->display();
+	getchar();
+}

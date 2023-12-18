@@ -1,0 +1,111 @@
+/*****建造者模式*****/
+//产品
+//虚拟建造者
+//实际建造者
+//指挥者
+#include <iostream>
+using namespace std;
+#pragma once
+
+class House{
+public:
+	House(){};
+	void setfloor(string floor){
+		this->floor = floor;
+	}
+	void setwall(string wall){
+		this->wall = wall;
+	}
+	void setroof(string roof){
+		this->roof = roof;
+	}
+	void printinfo(){
+		cout << this->floor.c_str() << endl;
+		cout << wall.c_str() << endl;
+		cout << roof.c_str() << endl;
+	}
+private:
+	string floor;
+	string wall;
+	string roof;
+};
+
+class AbstractBuilder{
+public:
+	AbstractBuilder(){
+		house = new House();
+	};
+	AbstractBuilder(const AbstractBuilder& a) = delete;
+	AbstractBuilder& operator = (const AbstractBuilder& a) = delete;
+	virtual ~AbstractBuilder(){
+		if (house != nullptr){
+			delete house;
+			house = nullptr;
+		}
+	}
+	virtual void buildfloor() = 0;
+	virtual void buildwall() = 0;
+	virtual void buildroof() = 0;
+	virtual House* gethouse() = 0;
+
+	House* house;
+};
+
+class ConcreteBuilderA :public AbstractBuilder{
+public:
+	ConcreteBuilderA(){};
+	ConcreteBuilderA(const ConcreteBuilderA& a) = delete;
+	ConcreteBuilderA& operator=(const ConcreteBuilderA& a) = delete;
+	~ConcreteBuilderA(){
+		if (this->house != nullptr){
+			delete this->house;
+			this->house = nullptr;
+		}
+	}
+	virtual void buildfloor(){
+		this->house->setfloor("floorA");
+	};
+	virtual void buildwall(){
+		this->house->setwall("wallA");
+	};
+	virtual void buildroof(){
+		this->house->setroof("roofA");
+	};
+	virtual House* gethouse(){
+		return this->house;
+	};
+};
+
+class Director{
+public:
+	Director():builder(nullptr){};
+	Director(const Director& a) = delete;
+	Director& operator=(const Director& a) = delete;
+	~Director(){
+		if (builder != nullptr){
+			delete builder;
+			builder = nullptr;
+		}
+	}
+	void setBuilder(AbstractBuilder* builder){
+		this->builder = builder;
+	}
+	House* construct(){
+		this->builder->buildfloor();
+		this->builder->buildwall();
+		this->builder->buildroof();
+		return builder->gethouse();
+	}
+private:
+	AbstractBuilder* builder;
+};
+//使用
+void main(){
+	House* house;
+	AbstractBuilder* a = new ConcreteBuilderA();
+	Director* d = new Director();
+	d->setBuilder(a);
+	house = d->construct();
+	house->printinfo();
+	getchar();
+}

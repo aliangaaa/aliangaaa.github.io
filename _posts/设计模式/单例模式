@@ -1,0 +1,114 @@
+#include <iostream>
+#include <mutex>
+using namespace std;
+//内嵌类用来析构static单例
+//内嵌类可以访问私有函数，所以可以被嵌套类中私有析构函数
+//测试
+#define Lazyman2
+#ifdef Lazyman1
+/**********懒汉模式**********/
+//线程不安全,双判断锁，外层判断的作用是节省每次调用都上锁的开销
+/*懒汉1:静态成员指针实现*/
+class singleton{
+private:
+	singleton(){};
+	~singleton(){};
+	singleton(const singleton& a);
+	singleton& operator=(const singleton& a);
+	class Garbage{
+	public:
+	    ~Garbage(){
+			if (singleton::sig != nullptr){
+				cout << "完成析构" << endl;
+				delete singleton::sig;
+			}
+		}
+	};
+public:
+	static singleton* sig;
+	static mutex mut;
+	static Garbage garbage;
+	static singleton* getinstance(){
+		if (sig == nullptr){
+			mut.lock();
+			if (sig == nullptr)
+				sig = new singleton();
+			mut.unlock();
+		}
+		return sig;
+	}
+};
+std::mutex singleton::mut;
+singleton* singleton::sig = nullptr;
+singleton::Garbage singleton::garbage;
+#endif // Lazyman
+
+#ifdef Lazyman2
+/*懒汉2:静态成员变量*/
+class singleton{
+private:
+	singleton(){};
+	~singleton(){};
+	singleton(const singleton& a);
+	singleton& operator=(const singleton& a);
+public:
+	static singleton& getinstance(){
+		static singleton sig;
+		return sig;
+	}
+	//可以返回指针
+	//static singleton* getinstance(){
+	//	static singleton sig;
+	//	return &sig;
+	//}
+};
+#endif
+/**********饿汉模式**********/
+#ifdef Hungryman1
+/*饿汉1:静态成员指针实现*/
+class singleton{
+private:
+	singleton(){};
+	~singleton(){};
+	singleton(const singleton& a);
+	singleton& operator= (singleton& a);
+	class Garbage{
+	public:
+		~Garbage(){
+			if (singleton::sig != nullptr){
+				cout<<"完成析构"<<endl;
+				delete singleton::sig;
+			}		
+		}
+	};
+public:
+	static singleton* sig;
+	static Garbage garbage;
+	static singleton* getinstance(){
+		return sig;
+	}
+};
+singleton::Garbage singleton::garbage;
+singleton* singleton::sig = new singleton();
+#endif
+
+#ifdef Hungryman2
+/*饿汉2:静态成员变量*/
+class singleton{
+private:
+	singleton(){};
+	~singleton(){};
+	singleton(const singleton& a);
+	singleton& operator= (singleton& a);
+public:
+	static singleton sig;
+	static singleton& getinstance(){
+		return sig;
+	}
+	//可以返回指针
+	//static singleton* getinstance(){
+	//	return &sig;
+	//}
+};
+singleton singleton::sig;
+#endif

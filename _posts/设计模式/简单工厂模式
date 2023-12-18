@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string.h>
+#include <memory>
+using namespace std;
+/******简单工厂******/
+/*
+1、工厂的创建
+2、虚拟产品的创建
+3、具体产品的创建
+*/
+class Abstract{
+public:
+	Abstract(){};
+	~Abstract(){};
+	virtual void printname() = 0;
+	virtual void play() = 0;
+};
+class basketball:public Abstract{
+public:
+	basketball(){};
+	~basketball(){};
+	virtual void printname(){
+		cout << "im basketball" << endl;
+	};
+	virtual void play(){
+		cout << "play basketball" << endl;
+	};
+};
+class football :public Abstract{
+public:
+	football(){};
+	~football(){};
+	virtual void printname(){
+		cout << "im football" << endl;
+	};
+	virtual void play(){
+		cout << "play football" << endl;
+	};
+};
+class Factory{
+public:
+	Factory(){};
+	virtual ~Factory(){};
+	
+	Abstract* createmode(string s){
+		Abstract* pro=NULL;
+		if (s=="basketball"){
+			pro = new basketball;
+		}
+		else if (s == "football"){
+			pro = new football;
+		}
+		return pro;
+	}
+};
