@@ -1,6 +1,12 @@
 ---
-
+layout: post
+title: python移动文件
+category: python
+tags: Essay
+keywords: 
+description: 
 ---
+
 在 Python 中，可以使用 `shutil` 模块来实现将文件夹下的指定文件移动到另一个文件夹下并替换。以下是一个示例代码，假设要将文件夹 `source_folder` 中的名为 `file_to_move.txt` 的文件移动到文件夹 `destination_folder` 中，并替换同名文件：
 
 ```python
