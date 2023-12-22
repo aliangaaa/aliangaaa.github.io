@@ -1,0 +1,90 @@
+---
+layout: post
+title: model
+category: QT
+tags: Essay
+keywords: 
+description: 
+---
+
+## QStringListModel(->QStandardItemModel->QAbstractItemModel)
+QStringListModel是qt自带的比较好用的listview的model
+
+## QStandardItemModel(->QAbstractItemModel)
+可以用作treeview和tableview的model
+通过appendrow添加QStandardItem类型的项
+
+## view中添加QCombobox
+```cpp
+#include <QApplication>
+#include <QStandardItemModel>
+#include <QTreeView>
+#include <QItemDelegate>
+#include <QComboBox>
+
+class ComboBoxDelegate : public QItemDelegate
+{
+public:
+    ComboBoxDelegate(QObject *parent = nullptr) : QItemDelegate(parent) {}
+
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override
+    {
+        if (index.column() == 1) // 仅在第二列上放置QComboBox
+        {
+            QComboBox *comboBox = new QComboBox(parent);
+            comboBox->addItem("Option 1");
+            comboBox->addItem("Option 2");
+            comboBox->addItem("Option 3");
+            return comboBox;
+        }
+        else
+        {
+            return QItemDelegate::createEditor(parent, option, index);
+        }
+    }
+
+    void setEditorData(QWidget *editor, const QModelIndex &index) const override
+    {
+        if (QComboBox *comboBox = qobject_cast<QComboBox *>(editor))
+        {
+            QString value = index.model()->data(index, Qt::EditRole).toString();
+            int i = comboBox->findText(value);
+            if (i != -1)
+                comboBox->setCurrentIndex(i);
+        }
+        else
+        {
+            QItemDelegate::setEditorData(editor, index);
+        }
+    }
+
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override
+    {
+        if (QComboBox *comboBox = qobject_cast<QComboBox *>(editor))
+        {
+            model->setData(index, comboBox->currentText(), Qt::EditRole);
+        }
+        else
+        {
+            QItemDelegate::setModelData(editor, model, index);
+        }
+    }
+};
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+
+    QStandardItemModel model(4, 2);
+    QTreeView treeView;
+    treeView.setModel(&model);
+    treeView.setItemDelegateForColumn(1, new ComboBoxDelegate(&treeView)); // 将QComboBoxDelegate应用于第二列
+
+    treeView.show();
+
+    return app.exec();
+}
+```
+在这个示例中，我们创建了一个自定义的QItemDelegate类ComboBoxDelegate，它用于在QTreeView的第二列上放置一个QComboBox。在createEditor()方法中，我们检查索引的列号，如果是第二列，则创建一个QComboBox并返回。在setEditorData()方法中，我们将QComboBox的当前值设置为项目的值。在setModelData()方法中，我们将QComboBox的当前文本设置为项目的数据。
+
+通过使用QItemDelegate，您可以轻松地在QTreeView中的项目上放置QComboBox或者其他自定义的编辑器。
