@@ -1,0 +1,25 @@
+---
+layout: post
+title: gdb调试
+category: 常用指令
+tags: Essay
+keywords: 
+description: 
+---
+
+##加入符号表编译
+```
+gcc -g test.c -o test
+```
+
+## GDB常用指令
+```
+gdb ./test
+list
+b(break) test.c:10
+info breakpoints
+run
+continue
+step    // 进函数
+next    // 不进函数
+```
