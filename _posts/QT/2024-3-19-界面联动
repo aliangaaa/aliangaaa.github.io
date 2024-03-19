@@ -1,0 +1,10 @@
+---
+layout: post
+title: 界面联动
+category: QT
+tags: Essay
+keywords: 
+description: 
+---
+
+- 对于多个界面掌握一组变量，且多联动时，用单例模式更方便
