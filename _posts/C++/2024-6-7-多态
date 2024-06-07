@@ -1,0 +1,61 @@
+```
+// 父类
+class ParentClass {
+public:
+    ParentClass() {
+        doSomething();
+    }
+    virtual void func() {
+        std::cout << "ParentClass::func() called" << std::endl;
+        doSomething();
+        takeSomething();
+    }
+
+protected:
+    virtual void doSomething() {
+        std::cout << "ParentClass::doSomething() called" << std::endl;
+    }
+
+    void takeSomething() {
+        std::cout << "ParentClass::takeSomething() called" << std::endl;
+    }
+};
+
+// 子类
+class ChildClass : public ParentClass {
+protected:
+    void doSomething() override {
+        std::cout << "ChildClass::doSomething() called" << std::endl;
+    }
+    void takeSomething() {
+        std::cout << "ChildClass::takeSomething() called" << std::endl;
+    }
+};
+
+int main() {
+    ParentClass* parent = new ParentClass();
+    parent->func();
+    std::cout << std::endl;
+
+    ChildClass* child = new ChildClass();
+    child->func();
+
+    delete parent;
+    delete child;
+    return 0;
+}
+```
+输出
+```
+ParentClass::doSomething() called
+ParentClass::func() called
+ParentClass::doSomething() called
+ParentClass::takeSomething() called
+
+ParentClass::doSomething() called
+ParentClass::func() called
+ChildClass::doSomething() called
+ParentClass::takeSomething() called
+```
+子类实例化的时候，调用父类的构造方法，在父类的构造函数中调用的方法是父类本身的。如果子类已经构造完成，调用继承的方法，这个方法中使用的函数，（要求是虚函数）如果子类有那么就是子类自身的方法。
+如果不是虚函数，那么还是父类自身的方法。
