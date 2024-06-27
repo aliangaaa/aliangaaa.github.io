@@ -1,0 +1,60 @@
+---
+layout: post
+title: 析构函数虚函数
+category: CPP
+tags: Essay
+keywords: 
+description: 
+---
+
+```cpp
+#include<iostream>
+#include<list>
+#include<string>
+#include<vector>
+using namespace std;
+
+class base
+{
+public:
+	~base()
+	{
+		cout<<"父类析构函数被调用"<<endl;
+	}
+};
+
+class derived:public base
+{
+public:
+	char *m_str;
+	derived()
+	{
+		m_str = new char(100);
+	}
+	~derived()
+	{
+		cout<<"子类的析构函数被调用"<<endl;
+		delete m_str;
+	}
+};
+
+int main()
+{
+/*******就是为了处理这种父类指针指向子类对象的情况，使用了虚函数析构*********/
+	base *p = new derived();//父类指针指向子类对象
+	delete p ;//这是只调用了父类的析构函数，未执行子类的析构函数delete m_str;造成内存泄漏
+
+	base *m = new base();//父类指针指向父类
+	delete m;//这是不会造成内存泄漏
+
+  derived* q = new derived();//子类指针指向子类对象
+  delete q;//不会造成内存泄漏，先调用自身析构，再调用父类析构
+  return 0;
+}
+
+输出：
+父类析构函数被调用
+父类析构函数被调用
+请按任意键继续. . .
+
+```
