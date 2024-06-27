@@ -1,3 +1,11 @@
+---
+layout: post
+title: 多态
+category: CPP
+tags: Essay
+keywords: 
+description: 
+---
 ```
 // 父类
 class ParentClass {
