@@ -48,7 +48,7 @@ int main() {
 
     // bind
     std::function<int(int)> func5 = bind(add, 1, std::placeholders::_1);
-    func5(2);        //表示add的第一个参数是1， 第二个参数是func5输入的第一个参数
+    func5(2);        //表示add的第一个参数是1， 第二个参数是func5输入的第一个参数。对于事先不绑定（placeholders）的通过引用传递，对于事先绑定的通过值传递
 
     return 0;
 }
