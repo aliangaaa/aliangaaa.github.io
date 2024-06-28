@@ -46,6 +46,10 @@ int main() {
     std::function<int(int, int)> func4 = multiplier;
     std::cout << "7 * 8 = " << func4(7, 8) << std::endl;
 
+    // bind
+    std::function<int(int)> func5 = bind(add, 1, std::placeholders::_1);
+    func5(2);        //表示add的第一个参数是1， 第二个参数是func5输入的第一个参数
+
     return 0;
 }
 
