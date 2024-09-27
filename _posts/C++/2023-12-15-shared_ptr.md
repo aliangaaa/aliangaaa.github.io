@@ -22,3 +22,7 @@ shared_ptr<int> ptr = shared_ptr<int>(a);
 shared_ptr<int> ptr2 = ptr;     // 引用计算数会增加是可以的。unique_ptr不能这么操作
 shared_ptr<int> ptr3 = shared_ptr<int>(a)   // 引用计数各为1， 任意一个离开作用域都会导致内存释放。
 ```
+```
+shared_ptr本身是线程安全的，即引用计数和对象的删除是线程安全的，
+管理的对象线程安全性靠自己保证
+```
