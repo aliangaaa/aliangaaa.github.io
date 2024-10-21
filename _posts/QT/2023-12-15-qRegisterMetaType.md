@@ -30,3 +30,10 @@ QVariant如果要进行转化就需要通过Q_DECLARE_METATYPE就行。
 ```
 
 <https://blog.csdn.net/xinqingwuji/article/details/123557682?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-2-123557682-blog-82107880.235%5Ev38%5Epc_relevant_anti_t3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-2-123557682-blog-82107880.235%5Ev38%5Epc_relevant_anti_t3&utm_relevant_index=4>
+
+```
+- 24-10-21更新
+对于同线程的类型是什么无所谓，自定义类型也可以传递。
+但是对于不同线程的，无法直接传递。可以通过qRegisterMetaType<QSerialPort::DataBits>("QSerialPort::DataBits");
+或者通过QVariant传递, 使用Q_DECLARE_METATYPE。
+```
