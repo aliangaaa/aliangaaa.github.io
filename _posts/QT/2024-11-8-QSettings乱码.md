@@ -19,3 +19,8 @@ settings.value("temperature/data").toString()
 取值前加个
 settings.setIniCodec("utf-8");
 ```
+
+```
+网上还有一种是在main中添加一句话实测无用
+QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf-8"));
+```
