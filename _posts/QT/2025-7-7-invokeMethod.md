@@ -30,3 +30,6 @@ QMetaObject::invokeMethod 会根据目标对象（this）的线程亲和性，�
 如果调用 invokeMethod 的线程和 this 的线程不同，Qt 会自动将调用转为 QueuedConnection（异步队列调用），即函数会在 this 的线程事件循环中执行。
 
 如果调用线程和 this 的线程相同，则直接同步调用（DirectConnection）。
+
+####3.根据函数名字字符调用
+QMetaObject::invokeMethod(this, "updateTable", Qt::BlockingQueuedConnection, Q_ARG(std::vector<std::vector<double>>, result1));
